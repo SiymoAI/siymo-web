@@ -8,9 +8,11 @@ import { Logo } from '@/components/Logo';
 import { COUNTRIES, type Country } from '@/components/signin/countries';
 import { PhoneStep } from '@/components/signin/PhoneStep';
 import { VerifyStep } from '@/components/signin/VerifyStep';
+import { useT } from '@/i18n/LanguageContext';
 
 export function AuthPage() {
   const router = useRouter();
+  const { t } = useT();
   const [step, setStep] = useState<0 | 1>(0);
   const [country, setCountry] = useState<Country>(COUNTRIES[0]);
   const [phone, setPhone] = useState('');
@@ -50,6 +52,14 @@ export function AuthPage() {
             />
           )}
         </div>
+        {/* Quiet pitch for developers who land here: this whole SMS/call
+            sign-in is the Siymo OTP product — point them at the docs. */}
+        <p className="auth-ad">
+          {t.signIn.builtWith.text}{' '}
+          <a href="https://otp.siymo.com/docs" target="_blank" rel="noopener noreferrer">
+            {t.signIn.builtWith.cta} ↗
+          </a>
+        </p>
       </div>
     </div>
   );

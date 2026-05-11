@@ -10,6 +10,9 @@ const POSTHOG_ASSETS_HOST =
 
 const nextConfig = {
   reactStrictMode: true,
+  // Emit a self-contained server bundle (.next/standalone) so the Docker image
+  // only ships the node_modules it actually needs. See the Dockerfile.
+  output: 'standalone',
   // Required for the PostHog `/ingest` rewrites to work reliably.
   skipTrailingSlashRedirect: true,
   async rewrites() {

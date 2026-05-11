@@ -103,6 +103,7 @@ export type Translation = {
       attemptInvalid: string;
       sessionTemplate: string;
     };
+    builtWith: { text: string; cta: string };
   };
   comingSoon: {
     badge: string;
@@ -344,6 +345,10 @@ const en: Translation = {
       tryAgain: 'Try again',
       attemptInvalid: 'Invalid code — try again',
       sessionTemplate: 'SESSION · {code}',
+    },
+    builtWith: {
+      text: 'Want this phone sign-in in your own app?',
+      cta: 'Read the docs',
     },
   },
   comingSoon: {
@@ -602,6 +607,10 @@ const ru: Translation = {
       attemptInvalid: 'Неверный код — попробуйте снова',
       sessionTemplate: 'СЕССИЯ · {code}',
     },
+    builtWith: {
+      text: 'Хотите такой же вход по телефону в своём приложении?',
+      cta: 'Открыть документацию',
+    },
   },
   comingSoon: {
     badge: 'Вы вошли',
@@ -858,6 +867,10 @@ const uz: Translation = {
       tryAgain: 'Qayta urinish',
       attemptInvalid: 'Notoʻgʻri kod — qayta urinib koʻring',
       sessionTemplate: 'SESSIYA · {code}',
+    },
+    builtWith: {
+      text: 'Shunday telefon orqali kirishni oʻz ilovangizga qoʻshmoqchimisiz?',
+      cta: 'Hujjatlarni oching',
     },
   },
   comingSoon: {

@@ -1,0 +1,29 @@
+services:
+  siymo-web:
+    # Pull the multi-arch image published by `npm run docker:publish`.
+    # Pin to a tag (e.g. :v1) in production the way siymo-otp-service does.
+    image: registry.inadullaev.com/siymo-web:latest
+    # — or build it locally instead of pulling (uncomment, then `docker compose up --build`):
+    # build:
+    #   context: .
+    #   args:
+    #     # NEXT_PUBLIC_* must be supplied at *build* time (inlined into the bundle):
+    #     NEXT_PUBLIC_POSTHOG_KEY: ${NEXT_PUBLIC_POSTHOG_KEY:-}
+    #     NEXT_PUBLIC_POSTHOG_HOST: ${NEXT_PUBLIC_POSTHOG_HOST:-https://us.posthog.com}
+    container_name: siymo-web
+    restart: unless-stopped
+    ports:
+      - "3012:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      # Server-side OTP API key + base URL. Keep the real key out of this file —
+      # it's read from .env below (which is git-ignored).
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s

@@ -555,8 +555,26 @@ main { padding-top: 0; }
 .auth-body {
   flex: 1;
   display: grid; place-items: center;
+  align-content: center;
+  gap: 22px;
   padding: 24px 24px 64px;
 }
+.auth-ad {
+  margin: 0;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--fg-mute);
+  text-wrap: pretty;
+}
+.auth-ad a {
+  color: var(--fg-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+}
+.auth-ad a:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ─── auth card ───────────────────────────────── */
 
