@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { LanguageProvider } from '@/i18n/LanguageContext';
 import { translations } from '@/i18n/translations';
 import { LANG_COOKIE, parseLang } from '@/lib/lang';
+import { PostHogProvider } from './providers';
 import './globals.css';
 
 const FONTS_HREF =
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link href={FONTS_HREF} rel="stylesheet" />
       </head>
       <body>
-        <LanguageProvider initialLang={lang}>{children}</LanguageProvider>
+        <PostHogProvider>
+          <LanguageProvider initialLang={lang}>{children}</LanguageProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

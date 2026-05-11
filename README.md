@@ -31,11 +31,13 @@ npm start                     # http://localhost:3000
 ```
 src/
   app/
-    layout.tsx          root layout: <html>, fonts, <LanguageProvider>
+    layout.tsx          root layout: <html>, fonts, <PostHogProvider>, <LanguageProvider>
     page.tsx            "/"        — landing (redirects to /account if signed in)
     login/page.tsx      "/login"   — sign-in (redirects to /account if signed in)
     account/page.tsx    "/account" — signed-in screen (redirects to /login if not)
     not-found.tsx       custom 404 page (logo + Lottie pulse, in your design system)
+    providers.tsx       client-side PostHog init (autocapture, replay, heatmaps)
+    PostHogPageView.tsx $pageview on each route change + replay off on /login,/account
     globals.css         the styles
     api/
       start/route.ts    POST  — initiate an inbound SMS / call session
@@ -69,10 +71,32 @@ src/
    the cookie via `getCurrentAccount()` and renders the signed-in screen — or
    redirects to `/login` if there's no valid session.
 
+### Analytics (PostHog)
+
+Visitor analytics — autocaptured clicks, scroll depth, pageviews, **session
+replay** and **heatmaps** — run through [PostHog](https://posthog.com).
+
+1. Create a project at PostHog, copy the **Project API key**, and put it in
+   `.env` as `NEXT_PUBLIC_POSTHOG_KEY` (also set `NEXT_PUBLIC_POSTHOG_HOST` to
+   your region's UI host; the EU ingest hosts are noted in `.env.example`).
+2. In the PostHog project, turn on **Session Replay** and **Heatmaps**.
+3. Leave the key blank to disable analytics entirely (default in `.env.example`).
+
+Ingestion is reverse-proxied under `/ingest/*` (see `next.config.mjs`) so
+ad-blockers don't drop the requests.
+
+**Privacy:** because `/login` collects a phone number and an OTP code, replay
+masks **all** `<input>` values, never records the `/login` or `/account` screens
+(`PostHogPageView` stops recording on those routes), and you can opt any element
+out with `data-ph-no-capture` or hard-mask its text with `data-ph-mask`. No
+cookie-consent banner is wired up yet — add one before serving EU traffic
+(PostHog can be initialised in an opted-out state until the user consents).
+
 ### Notes
 
 - **Env vars** are loaded by Next.js from `.env` automatically — there's no
-  `dotenv` and no separate backend to start.
+  `dotenv` and no separate backend to start. Anything the browser needs
+  (PostHog key/host) must be prefixed `NEXT_PUBLIC_`.
 - **Session state** (`pendingPhones`, `logins`) is in-memory — fine for a demo
   or a single-process deployment (`next dev` / `next start`). For a
   multi-instance or serverless deployment, back it with Redis or a DB, and add
