@@ -1,3 +1,5 @@
+'use client';
+
 import {
   createContext,
   useContext,
@@ -6,6 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import { translations, type Lang, type Translation } from './translations';
+import { LANG_COOKIE, LANG_COOKIE_MAX_AGE } from '../lib/lang';
 
 type LanguageContextValue = {
   lang: Lang;
@@ -14,20 +17,26 @@ type LanguageContextValue = {
 };
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
-const STORAGE_KEY = 'siymo-lang';
 
-function readStoredLang(): Lang {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  return stored === 'ru' || stored === 'uz' ? stored : 'en';
-}
+export function LanguageProvider({
+  initialLang,
+  children,
+}: {
+  // Resolved from the `siymo-lang` cookie on the server so the first render is
+  // already in the right language (no flash, no hydration mismatch).
+  initialLang: Lang;
+  children: ReactNode;
+}) {
+  const [lang, setLangState] = useState<Lang>(initialLang);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(readStoredLang);
+  const setLang = (next: Lang) => {
+    setLangState(next);
+    document.cookie = `${LANG_COOKIE}=${next}; path=/; max-age=${LANG_COOKIE_MAX_AGE}; samesite=lax`;
+  };
 
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = translations[lang].meta.title;
-    localStorage.setItem(STORAGE_KEY, lang);
   }, [lang]);
 
   return (

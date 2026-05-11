@@ -96,8 +96,27 @@ export type Translation = {
       tooManyTries: string;
       startOver: string;
       waiting: string;
+      starting: string;
+      confirming: string;
+      verified: string;
+      tryAgain: string;
+      attemptInvalid: string;
       sessionTemplate: string;
     };
+  };
+  comingSoon: {
+    badge: string;
+    title: RichSegment[];
+    body: string;
+    accountLabel: string;
+    phoneLabel: string;
+    verifiedLabel: string;
+    signOut: string;
+  };
+  notFound: {
+    title: RichSegment[];
+    body: string;
+    backHome: string;
   };
   countries: Record<string, string>;
 };
@@ -319,8 +338,27 @@ const en: Translation = {
       tooManyTries: 'Too many attempts',
       startOver: 'Start over',
       waiting: 'Waiting for confirmation…',
+      starting: 'Preparing your code…',
+      confirming: 'Confirming…',
+      verified: 'Verified — signing you in…',
+      tryAgain: 'Try again',
+      attemptInvalid: 'Invalid code — try again',
       sessionTemplate: 'SESSION · {code}',
     },
+  },
+  comingSoon: {
+    badge: 'Signed in',
+    title: [{ t: 'Your workspace is ' }, { t: 'coming soon.', ital: true }],
+    body: 'Your phone is verified and your Siymo account is ready. The dashboard — call logs, your AI agent, billing — is on the way. We will let you know the moment it goes live.',
+    accountLabel: 'Account',
+    phoneLabel: 'Verified phone',
+    verifiedLabel: 'Verified',
+    signOut: 'Sign out',
+  },
+  notFound: {
+    title: [{ t: 'Page ' }, { t: 'not found.', ital: true }],
+    body: 'The page you are looking for does not exist — or it has moved. Let us take you back to where things work.',
+    backHome: 'Back to home',
   },
   countries: {
     UZ: 'Uzbekistan',
@@ -557,8 +595,27 @@ const ru: Translation = {
       tooManyTries: 'Слишком много попыток',
       startOver: 'Начать заново',
       waiting: 'Ожидаем подтверждения…',
+      starting: 'Готовим код…',
+      confirming: 'Подтверждаем…',
+      verified: 'Подтверждено — выполняем вход…',
+      tryAgain: 'Попробовать снова',
+      attemptInvalid: 'Неверный код — попробуйте снова',
       sessionTemplate: 'СЕССИЯ · {code}',
     },
+  },
+  comingSoon: {
+    badge: 'Вы вошли',
+    title: [{ t: 'Ваш кабинет ' }, { t: 'скоро будет здесь.', ital: true }],
+    body: 'Ваш номер подтверждён, аккаунт Siymo готов. Панель — журналы звонков, ваш ИИ-агент, оплата — уже в пути. Мы сообщим, как только всё заработает.',
+    accountLabel: 'Аккаунт',
+    phoneLabel: 'Подтверждённый номер',
+    verifiedLabel: 'Подтверждён',
+    signOut: 'Выйти',
+  },
+  notFound: {
+    title: [{ t: 'Страница ' }, { t: 'не найдена.', ital: true }],
+    body: 'Страница, которую вы ищете, не существует — или была перемещена. Вернём вас туда, где всё работает.',
+    backHome: 'На главную',
   },
   countries: {
     UZ: 'Узбекистан',
@@ -795,8 +852,27 @@ const uz: Translation = {
       tooManyTries: 'Urinishlar koʻp boʻldi',
       startOver: 'Qaytadan boshlash',
       waiting: 'Tasdiqlash kutilmoqda…',
+      starting: 'Kod tayyorlanmoqda…',
+      confirming: 'Tasdiqlanmoqda…',
+      verified: 'Tasdiqlandi — tizimga kirilmoqda…',
+      tryAgain: 'Qayta urinish',
+      attemptInvalid: 'Notoʻgʻri kod — qayta urinib koʻring',
       sessionTemplate: 'SESSIYA · {code}',
     },
+  },
+  comingSoon: {
+    badge: 'Tizimga kirdingiz',
+    title: [{ t: 'Shaxsiy kabinetingiz ' }, { t: 'tez orada.', ital: true }],
+    body: 'Telefon raqamingiz tasdiqlandi, Siymo hisobingiz tayyor. Boshqaruv paneli — qoʻngʻiroqlar tarixi, AI agentingiz, toʻlovlar — tez kunda. Ishga tushishi bilan xabar beramiz.',
+    accountLabel: 'Hisob',
+    phoneLabel: 'Tasdiqlangan raqam',
+    verifiedLabel: 'Tasdiqlangan',
+    signOut: 'Chiqish',
+  },
+  notFound: {
+    title: [{ t: 'Sahifa ' }, { t: 'topilmadi.', ital: true }],
+    body: 'Siz qidirayotgan sahifa mavjud emas — yoki koʻchirilgan. Keling, sizni ishlaydigan joyga qaytaramiz.',
+    backHome: 'Bosh sahifaga',
   },
   countries: {
     UZ: 'Oʻzbekiston',
